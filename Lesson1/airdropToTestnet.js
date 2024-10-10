@@ -27,7 +27,7 @@ const privateKey = newPair._keypair.secretKey;
 const getWalletBalance = async ( connection, publicKey ) => {
   try { 
     // get balance
-    const walletBalance = await connection.getBalance( publicKey );
+    const walletBalance = await connection.getBalance( new PublicKey(publicKey) );
 
     // display balance
     console.log(`Wallet balance: ${parseInt(walletBalance) / LAMPORTS_PER_SOL} SOL `);
@@ -48,8 +48,8 @@ const airDropSol = async ( connection, publicKey , amount) => {
   try {
     console.log(`Airdropping ${amount} SOL to the wallet!`);
     const txHash = await connection.requestAirdrop(
-      publicKey,
-      2 * LAMPORTS_PER_SOL
+      new PublicKey(publicKey),
+      amount * LAMPORTS_PER_SOL
     )
 
   // verify transaction has been mined
@@ -61,6 +61,21 @@ const airDropSol = async ( connection, publicKey , amount) => {
   }
 
 }
+
+
+
+// call the appropriate functions 
+
+const mainFunction = async () => {
+
+  await getWalletBalance(connection, publicKey);
+
+  await airDropSol(connection, publicKey, 2 );
+
+  await getWalletBalance(connection, publicKey);
+}
+
+mainFunction();
 
 
 

@@ -8,7 +8,7 @@ const {
 
 const getWalletBalance = async ( connection, publicKey ) => {
   try {
-      const walletBalance = await connection.getBalance( publicKey );
+    const walletBalance = await connection.getBalance( new PublicKey(publicKey) );
 
     console.log(`Wallet balance: ${parseInt(walletBalance) / LAMPORTS_PER_SOL} SOL `);
   } catch (err) {
